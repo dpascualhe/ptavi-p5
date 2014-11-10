@@ -126,27 +126,35 @@ Se ha capturado una sesión SIP (archivo sip.cap.gz), que se puede abrir con Wir
         video que, como comprobamos en las tramas, lleva RTP por debajo.
 
  ** ¿Cuál es el tamaño de paquete de los mismos?
-        Los paquetes de RTP tienen 214 bits. Los paquetes de H.261 tienen un tamaño variable, aunque en general los tenemos
-        agrupados por parejas donde el primer paquete tiene en torno a los 1000 bits y el segundo unos 400-200 bits.
+        Los paquetes de RTP tienen 214 bytess. Los paquetes de H.261 tienen un tamaño variable, aunque en general los tenemos
+        agrupados por parejas donde el primer paquete tiene en torno a los 1000 bytes y el segundo unos 400-200 bytes.
 
  ** ¿Se utilizan bits de padding?
         El bit de padding está a 0 en los paquetes.
 
  ** ¿Cuál es la periodicidad de los paquetes que se envían?
-        2 paquetes H.261 - 7 paquetes RTP - 2 paquetes H.261 - 6 paquetes RTP - 2 paquetes H.261 - 5 paquetes RTP y repetimos
         Un paquete de RTP cada 0.024 s.
 
  ** ¿Cuántos bits/segundo estamos enviando?
-        Sin contar H.261 tenemos 214 bits cada 0.024 segundos. Es decir, 8196.67 bits/s
+        Sin contar H.261 tenemos 214 bytes cada 0.024 segundos. Es decir, 71.3 kbits/s
 
 
 [Al terminar el ejercicio es recomendable hacer commit de los ficheros modificados]
 
 12. Vamos a ver más a fondo el intercambio RTP. En Telephony hay una opción RTP. Empecemos mirando los flujos RTP.
  ** ¿Cuántos flujos hay? ¿por qué?
+        Tenemos 2 flujos. Una para RTP propiamente dicho y otro para H.261.
+
  ** ¿Cuántos paquetes se pierden?
+        No se pierde ninguno.        
+
  ** ¿Cuál es el valor máximo del delta? ¿Y qué es lo que significa el valor de delta?
+        1290.48 ms en H.261 y 1290.4 ms en RTP. El tiempo entre un paquete y otro.
+
  ** ¿Cuáles son los valores de jitter (medio y máximo)? ¿Qué quiere decir eso? ¿Estamos ante una conversación de calidad?
+        RTP --> 119.64 ms de jitter máximo y 42.50 ms de jitter medio.
+        H.261 --> 183.1 ms de jitter máximo y 153.24 ms de jitter medio.
+        Sí.
 
 
 13. Elige un paquete RTP de audio. Analiza el flujo de audio en Telephony -> RTP -> Stream Analysis.
@@ -187,16 +195,27 @@ Captura una sesión SIP de una conversación con el número SIP sip:9999@qxip.ne
 
 17. Observa las diferencias en el inicio de la conversación entre el entorno del laboratorio y el del ejercicio anterior:
  ** ¿Es necesario el uso de DNS y STUN? ¿Por qué?
+        No necesitamos DNS y STUN porque no tenemos router NAT.
  ** ¿Son diferentes el registro y la descripción de la sesión?
-
+        Sí, tenemos los métodos PUBLISH y SUBSCRIBE.
 
 18. Identifica las diferencias existentes entre esta conversación y la conversación anterior:
  ** ¿Cuántos flujos tenemos?
- ** ¿Cuál es su periodicidad?
- ** ¿Cuánto es el valor máximo del delta y los valores medios y máximo del jitter?
- ** ¿Podrías reproducir la conversación desde Wireshark? ¿Cómo? Comprueba que poniendo un valor demasiado pequeño para el buffer de jitter, la conversación puede no tener la calidad necesaria.
- ** ¿Sabrías decir qué tipo de servicio ofrece sip:9999@qxip.net?
+        Tenemos dos flujos como antes.
 
+ ** ¿Cuál es su periodicidad?
+        Tenemos un paquete cada 20 ms.
+
+ ** ¿Cuánto es el valor máximo del delta y los valores medios y máximo del jitter?
+        Los valores máximos de delta: 42.73 ms para un flujo y 24.43 para el otro.
+        Los valores medios de jitter: 0.89 ms para uno y 0.23 ms para otro.
+        Los valores máximos de jitter: 4.43 para uno y 0.88 para otro.
+
+ ** ¿Podrías reproducir la conversación desde Wireshark? ¿Cómo? Comprueba que poniendo un valor demasiado pequeño para el buffer de jitter, la conversación puede no tener la calidad necesaria.
+        Sí, en VoIP Calls, la opción player.
+
+ ** ¿Sabrías decir qué tipo de servicio ofrece sip:9999@qxip.net?
+        Un servicio de prueba de llamada.
 
 
 [Al terminar el ejercicio es recomendable hacer commit de los ficheros modificados]
