@@ -19,21 +19,20 @@ Se ha capturado una sesión SIP (archivo sip.cap.gz), que se puede abrir con Wir
         La captura dura 56.149345000 segundos    
 
  ** ¿Qué IP tiene la máquina donde se ha efectuado la captura? ¿Se trata de una IP pública o de una IP privada? ¿Por qué lo sabes?
-        La IP de la máquina que realiza la captura es 192.168.1.34, ya que podemos ver su comunicación con el router NAT. Sabemos que se 
-    trata de una IP privada por el número de IP.
+        La IP de la máquina que realiza la captura es 192.168.1.34, ya que podemos ver su comunicación con el router NAT. Sabemos  
+        que se trata de una IP privada por el número de IP.
 
 
 3. Antes de analizar las tramas, mira las estadísticas generales que aparecen en el menú de Statistics. En el apartado de jerarquía de protocolos (Protocol Hierarchy) se puede ver el porcentaje del tráfico correspondiente al protocolo TCP y UDP.
  ** ¿Cuál de los dos es mayor? ¿Es esto consistente con una aplicación que transmite en tiempo real?
         Es mayor el número de mensajes UDP. Sí, UDP es el protocolo que se suele usar para transmisiones en tiempo real por sus 
-    características.
+        características.
 
  ** ¿Qué otros protocolos podemos ver en la jerarquía de protocolos?
-        Podemos ver Internet Protocol (IP), Domain Name Service (DNS), Session Initiation Protocol (SIP), Real-Time Transport Protocol 
-    (RTP), Real-time Transport Control Protocol (RTCP), Hypertext Transfer Protocol (HTP), Internet Control Message Protocol (ICMP) y 
-    Address Resolution Protocol (ARP). 
+        Podemos ver Internet Protocol (IP), Domain Name Service (DNS), Session Initiation Protocol (SIP), Real-Time Transport 
+        Protocol (RTP), Real-time Transport Control Protocol (RTCP), Hypertext Transfer Protocol (HTP), Internet Control Message 
+        Protocol (ICMP) y Address Resolution Protocol (ARP). 
   
-
 4. Observa por encima el flujo de tramas en el menú de Statistics en IO Graphs. La captura que estamos viendo incluye desde la inicialización (registro) de la aplicación hasta su finalización, con una llamada entremedias.
  ** Filtra por sip para conocer cuándo se envían paquetes SIP. ¿En qué segundos tienen lugar esos envíos?
         Tenemos envíos SIP en 6-9 segundos, en 13-18 segundos, en 37-41 segundos y desde los 54 segundos hasta el final.
@@ -55,9 +54,8 @@ Se ha capturado una sesión SIP (archivo sip.cap.gz), que se puede abrir con Wir
         La IP que devuelve el servidor de nombres de Ekiga es 86.64.162.35.        
 
  ** ¿Por qué se pide también para 35.162.64.86.in-addr.arpa?
-        Se trata de la misma petición de antes, pero a la inversa. Como podemos comprobar en la respuesta, el servidor no es capaz de       
-    manejar este tipo de peticiones.
-
+        Se trata de la misma petición de antes, pero a la inversa. Como podemos comprobar en la respuesta, el servidor no es capaz 
+        de manejar este tipo de peticiones.
 
 6. A continuación, hay más de una docena de tramas TCP/HTTP.
  ** ¿Podrías decir la URL que se está pidiendo?
@@ -70,21 +68,28 @@ Se ha capturado una sesión SIP (archivo sip.cap.gz), que se puede abrir con Wir
         Un 200 OK con la siguiente IP: 83.36.48.212.
 
  ** Si lanzamos el navegador web, por ejemplo, Mozilla Firefox, y vamos a la misma URL, ¿qué recibimos? ¿Qué es, entonces, lo que está respondiendo el servidor?
-        Recibimos una IP: 193.147.49.63. Esta IP no se corresponde con la IP que recibimos en la captura. Al acceder a esta URL, obtenemos como 
-    respuesta nuestra IP pública. En el caso de la captura, la IP pública es: 83.36.48.212.  
-
+        Recibimos una IP: 193.147.49.63. Esta IP no se corresponde con la IP que recibimos en la captura. Al acceder a esta URL, 
+        obtenemos como respuesta nuestra IP pública. En el caso de la captura, la IP pública es: 83.36.48.212.  
 
 7. Hasta la trama 45 se puede observar una secuencia de tramas del protocolo STUN.
  ** ¿Por qué crees que se hace uso de este protocolo en esta captura? Busca en la Wikipedia.
- ** ¿Estamos tras un NAT?
+        Usamos este protocolo porque nuestra comuncicación se está desarrollando con al menos un router NAT como intermediario.
 
+ ** ¿Estamos tras un NAT?
+        Sí, somos nosotros los que pedimos al router NAT atarnos.
 
 8. La trama 46 es la primera trama SIP. En un entorno como el de Internet, lo habitual es desconocer la dirección IP de la otra parte al realizar una llamada. Por eso, todo usuario registra su localización en un servidor Registrar. El Registrar guarda información sobre los usuarios en un servidor de localización que puede ser utilizado para localizar usuarios.
  ** ¿Qué dirección IP tiene el servidor Registrar?
- ** ¿A qué puerto (del servidor Registrar) se envían los paquetes SIP?
- ** ¿Qué método SIP utiliza el UA para registrarse?
- ** Además de REGISTER, ¿qué instrucciones SIP entiende el UA?
+        83.36.48.212.
 
+ ** ¿A qué puerto (del servidor Registrar) se envían los paquetes SIP?
+        5063.
+
+ ** ¿Qué método SIP utiliza el UA para registrarse?
+        REGISTER.
+
+ ** Además de REGISTER, ¿qué instrucciones SIP entiende el UA?
+        El UA entiende INVITE,ACK,OPTIONS,BYE,CANCEL,NOTIFY,REFER,MESSAGE.
 
 
 [Al terminar el ejercicio es recomendable hacer commit de los ficheros modificados]
